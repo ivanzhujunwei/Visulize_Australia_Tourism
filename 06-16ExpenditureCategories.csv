@@ -1,0 +1,617 @@
+Country,Year,Category,Expenditure
+New Zealand,2006,Holiday,909227
+New Zealand,2006,Visiting friends and relatives,404132
+New Zealand,2006,Business,312595
+New Zealand,2006,Education,73279
+New Zealand,2006,Employment,195837
+New Zealand,2006,Otherreason,72567
+New Zealand,2006,Backpackers,120491
+New Zealand,2006,Nonbackpackers,1847146
+Japan,2006,Holiday,1579029
+Japan,2006,Visiting friends and relatives,90859
+Japan,2006,Business,171813
+Japan,2006,Education,244598
+Japan,2006,Employment,0
+Japan,2006,Otherreason,72879
+Japan,2006,Backpackers,221509
+Japan,2006,Nonbackpackers,1992606
+Singapore,2006,Holiday,238129
+Singapore,2006,Visiting friends and relatives,94228
+Singapore,2006,Business,118547
+Singapore,2006,Education,178334
+Singapore,2006,Employment,0
+Singapore,2006,Otherreason,0
+Singapore,2006,Backpackers,42838
+Singapore,2006,Nonbackpackers,641367
+China,2006,Holiday,533254
+China,2006,Visiting friends and relatives,91182
+China,2006,Business,234293
+China,2006,Education,666536
+China,2006,Employment,0
+China,2006,Otherreason,66438
+China,2006,Backpackers,32583
+China,2006,Nonbackpackers,1584327
+United States,2006,Holiday,1023231
+United States,2006,Visiting friends and relatives,326890
+United States,2006,Business,527251
+United States,2006,Education,287785
+United States,2006,Employment,200091
+United States,2006,Otherreason,40373
+United States,2006,Backpackers,309209
+United States,2006,Nonbackpackers,2096413
+United Kingdom,2006,Holiday,2366817
+United Kingdom,2006,Visiting friends and relatives,985048
+United Kingdom,2006,Business,319069
+United Kingdom,2006,Education,0
+United Kingdom,2006,Employment,196037
+United Kingdom,2006,Otherreason,88935
+United Kingdom,2006,Backpackers,1006091
+United Kingdom,2006,Nonbackpackers,2983063
+Korea,2006,Holiday,651741
+Korea,2006,Visiting friends and relatives,135621
+Korea,2006,Business,119318
+Korea,2006,Education,362351
+Korea,2006,Employment,0
+Korea,2006,Otherreason,0
+Korea,2006,Backpackers,267686
+Korea,2006,Nonbackpackers,1149150
+New Zealand,2007,Holiday,1017778
+New Zealand,2007,Visiting friends and relatives,458360
+New Zealand,2007,Business,391090
+New Zealand,2007,Education,74838
+New Zealand,2007,Employment,164773
+New Zealand,2007,Otherreason,62884
+New Zealand,2007,Backpackers,119444
+New Zealand,2007,Nonbackpackers,2050279
+Japan,2007,Holiday,1375265
+Japan,2007,Visiting friends and relatives,89784
+Japan,2007,Business,112206
+Japan,2007,Education,227400
+Japan,2007,Employment,0
+Japan,2007,Otherreason,83899
+Japan,2007,Backpackers,252142
+Japan,2007,Nonbackpackers,1687155
+Singapore,2007,Holiday,285660
+Singapore,2007,Visiting friends and relatives,89778
+Singapore,2007,Business,137778
+Singapore,2007,Education,195157
+Singapore,2007,Employment,0
+Singapore,2007,Otherreason,0
+Singapore,2007,Backpackers,52894
+Singapore,2007,Nonbackpackers,826511
+China,2007,Holiday,574102
+China,2007,Visiting friends and relatives,184915
+China,2007,Business,252157
+China,2007,Education,772876
+China,2007,Employment,0
+China,2007,Otherreason,0
+China,2007,Backpackers,32916
+China,2007,Nonbackpackers,1882160
+United States,2007,Holiday,997803
+United States,2007,Visiting friends and relatives,328123
+United States,2007,Business,556846
+United States,2007,Education,310004
+United States,2007,Employment,103565
+United States,2007,Otherreason,55345
+United States,2007,Backpackers,329921
+United States,2007,Nonbackpackers,2021766
+United Kingdom,2007,Holiday,2192860
+United Kingdom,2007,Visiting friends and relatives,1065015
+United Kingdom,2007,Business,218144
+United Kingdom,2007,Education,108665
+United Kingdom,2007,Employment,222467
+United Kingdom,2007,Otherreason,61961
+United Kingdom,2007,Backpackers,931292
+United Kingdom,2007,Nonbackpackers,2937821
+Korea,2007,Holiday,683810
+Korea,2007,Visiting friends and relatives,207950
+Korea,2007,Business,69403
+Korea,2007,Education,442992
+Korea,2007,Employment,0
+Korea,2007,Otherreason,0
+Korea,2007,Backpackers,310573
+Korea,2007,Nonbackpackers,1183792
+New Zealand,2008,Holiday,969166
+New Zealand,2008,Visiting friends and relatives,471021
+New Zealand,2008,Business,400395
+New Zealand,2008,Education,63424
+New Zealand,2008,Employment,227708
+New Zealand,2008,Otherreason,90327
+New Zealand,2008,Backpackers,111829
+New Zealand,2008,Nonbackpackers,2110213
+Japan,2008,Holiday,1226053
+Japan,2008,Visiting friends and relatives,86667
+Japan,2008,Business,154333
+Japan,2008,Education,197270
+Japan,2008,Employment,0
+Japan,2008,Otherreason,57682
+Japan,2008,Backpackers,194216
+Japan,2008,Nonbackpackers,1571149
+Singapore,2008,Holiday,286984
+Singapore,2008,Visiting friends and relatives,97931
+Singapore,2008,Business,141824
+Singapore,2008,Education,213603
+Singapore,2008,Employment,0
+Singapore,2008,Otherreason,0
+Singapore,2008,Backpackers,41894
+Singapore,2008,Nonbackpackers,795023
+China,2008,Holiday,625094
+China,2008,Visiting friends and relatives,185650
+China,2008,Business,224714
+China,2008,Education,970327
+China,2008,Employment,0
+China,2008,Otherreason,0
+China,2008,Backpackers,54128
+China,2008,Nonbackpackers,2151036
+United States,2008,Holiday,966381
+United States,2008,Visiting friends and relatives,334537
+United States,2008,Business,666817
+United States,2008,Education,279650
+United States,2008,Employment,151039
+United States,2008,Otherreason,95536
+United States,2008,Backpackers,326309
+United States,2008,Nonbackpackers,2167651
+United Kingdom,2008,Holiday,2041514
+United Kingdom,2008,Visiting friends and relatives,1090818
+United Kingdom,2008,Business,297887
+United Kingdom,2008,Education,0
+United Kingdom,2008,Employment,269753
+United Kingdom,2008,Otherreason,89428
+United Kingdom,2008,Backpackers,886505
+United Kingdom,2008,Nonbackpackers,2978068
+Korea,2008,Holiday,571187
+Korea,2008,Visiting friends and relatives,130921
+Korea,2008,Business,93512
+Korea,2008,Education,437362
+Korea,2008,Employment,0
+Korea,2008,Otherreason,0
+Korea,2008,Backpackers,292608
+Korea,2008,Nonbackpackers,1069952
+New Zealand,2009,Holiday,827676
+New Zealand,2009,Visiting friends and relatives,462832
+New Zealand,2009,Business,315079
+New Zealand,2009,Education,74245
+New Zealand,2009,Employment,172210
+New Zealand,2009,Otherreason,57154
+New Zealand,2009,Backpackers,72307
+New Zealand,2009,Nonbackpackers,1836889
+Japan,2009,Holiday,969332
+Japan,2009,Visiting friends and relatives,90650
+Japan,2009,Business,130325
+Japan,2009,Education,202541
+Japan,2009,Employment,0
+Japan,2009,Otherreason,46089
+Japan,2009,Backpackers,177967
+Japan,2009,Nonbackpackers,1285498
+Singapore,2009,Holiday,297688
+Singapore,2009,Visiting friends and relatives,93670
+Singapore,2009,Business,135640
+Singapore,2009,Education,244869
+Singapore,2009,Employment,0
+Singapore,2009,Otherreason,0
+Singapore,2009,Backpackers,35731
+Singapore,2009,Nonbackpackers,805544
+China,2009,Holiday,733362
+China,2009,Visiting friends and relatives,216928
+China,2009,Business,236540
+China,2009,Education,1278391
+China,2009,Employment,74302
+China,2009,Otherreason,0
+China,2009,Backpackers,46076
+China,2009,Nonbackpackers,2561303
+United States,2009,Holiday,930385
+United States,2009,Visiting friends and relatives,324290
+United States,2009,Business,474484
+United States,2009,Education,320435
+United States,2009,Employment,138588
+United States,2009,Otherreason,81667
+United States,2009,Backpackers,330517
+United States,2009,Nonbackpackers,1939332
+United Kingdom,2009,Holiday,1926813
+United Kingdom,2009,Visiting friends and relatives,934195
+United Kingdom,2009,Business,245918
+United Kingdom,2009,Education,0
+United Kingdom,2009,Employment,209065
+United Kingdom,2009,Otherreason,63327
+United Kingdom,2009,Backpackers,1015989
+United Kingdom,2009,Nonbackpackers,2468056
+Korea,2009,Holiday,503293
+Korea,2009,Visiting friends and relatives,104326
+Korea,2009,Business,62621
+Korea,2009,Education,474383
+Korea,2009,Employment,0
+Korea,2009,Otherreason,0
+Korea,2009,Backpackers,317881
+Korea,2009,Nonbackpackers,1035997
+New Zealand,2010,Holiday,926574
+New Zealand,2010,Visiting friends and relatives,452280
+New Zealand,2010,Business,420817
+New Zealand,2010,Education,73311
+New Zealand,2010,Employment,205177
+New Zealand,2010,Otherreason,69270
+New Zealand,2010,Backpackers,77090
+New Zealand,2010,Nonbackpackers,2070340
+Japan,2010,Holiday,981959
+Japan,2010,Visiting friends and relatives,74103
+Japan,2010,Business,158959
+Japan,2010,Education,204554
+Japan,2010,Employment,0
+Japan,2010,Otherreason,38139
+Japan,2010,Backpackers,177930
+Japan,2010,Nonbackpackers,1311911
+Singapore,2010,Holiday,301617
+Singapore,2010,Visiting friends and relatives,123190
+Singapore,2010,Business,163306
+Singapore,2010,Education,286904
+Singapore,2010,Employment,0
+Singapore,2010,Otherreason,0
+Singapore,2010,Backpackers,62211
+Singapore,2010,Nonbackpackers,883131
+China,2010,Holiday,740770
+China,2010,Visiting friends and relatives,291851
+China,2010,Business,285411
+China,2010,Education,1583116
+China,2010,Employment,0
+China,2010,Otherreason,0
+China,2010,Backpackers,81260
+China,2010,Nonbackpackers,3014626
+United States,2010,Holiday,774839
+United States,2010,Visiting friends and relatives,303348
+United States,2010,Business,539419
+United States,2010,Education,246077
+United States,2010,Employment,116704
+United States,2010,Otherreason,53056
+United States,2010,Backpackers,307735
+United States,2010,Nonbackpackers,1725707
+United Kingdom,2010,Holiday,1656393
+United Kingdom,2010,Visiting friends and relatives,863474
+United Kingdom,2010,Business,297519
+United Kingdom,2010,Education,0
+United Kingdom,2010,Employment,279088
+United Kingdom,2010,Otherreason,62618
+United Kingdom,2010,Backpackers,836333
+United Kingdom,2010,Nonbackpackers,2438809
+Korea,2010,Holiday,583436
+Korea,2010,Visiting friends and relatives,118589
+Korea,2010,Business,70734
+Korea,2010,Education,388757
+Korea,2010,Employment,0
+Korea,2010,Otherreason,0
+Korea,2010,Backpackers,296566
+Korea,2010,Nonbackpackers,1037230
+New Zealand,2011,Holiday,876776
+New Zealand,2011,Visiting friends and relatives,458732
+New Zealand,2011,Business,396487
+New Zealand,2011,Education,63773
+New Zealand,2011,Employment,248801
+New Zealand,2011,Otherreason,90286
+New Zealand,2011,Backpackers,92527
+New Zealand,2011,Nonbackpackers,2042328
+Japan,2011,Holiday,799607
+Japan,2011,Visiting friends and relatives,84741
+Japan,2011,Business,146308
+Japan,2011,Education,220031
+Japan,2011,Employment,0
+Japan,2011,Otherreason,60265
+Japan,2011,Backpackers,159917
+Japan,2011,Nonbackpackers,1174613
+Singapore,2011,Holiday,325541
+Singapore,2011,Visiting friends and relatives,118109
+Singapore,2011,Business,199571
+Singapore,2011,Education,260799
+Singapore,2011,Employment,0
+Singapore,2011,Otherreason,29491
+Singapore,2011,Backpackers,47955
+Singapore,2011,Nonbackpackers,956399
+China,2011,Holiday,913116
+China,2011,Visiting friends and relatives,316573
+China,2011,Business,350901
+China,2011,Education,1810609
+China,2011,Employment,130619
+China,2011,Otherreason,0
+China,2011,Backpackers,98822
+China,2011,Nonbackpackers,3510648
+United States,2011,Holiday,756028
+United States,2011,Visiting friends and relatives,312978
+United States,2011,Business,648669
+United States,2011,Education,218239
+United States,2011,Employment,159341
+United States,2011,Otherreason,60646
+United States,2011,Backpackers,274260
+United States,2011,Nonbackpackers,1881641
+United Kingdom,2011,Holiday,1373674
+United Kingdom,2011,Visiting friends and relatives,842315
+United Kingdom,2011,Business,316038
+United Kingdom,2011,Education,0
+United Kingdom,2011,Employment,307842
+United Kingdom,2011,Otherreason,70344
+United Kingdom,2011,Backpackers,782622
+United Kingdom,2011,Nonbackpackers,2189933
+Korea,2011,Holiday,592863
+Korea,2011,Visiting friends and relatives,118927
+Korea,2011,Business,84681
+Korea,2011,Education,370129
+Korea,2011,Employment,0
+Korea,2011,Otherreason,116718
+Korea,2011,Backpackers,291010
+Korea,2011,Nonbackpackers,1061992
+New Zealand,2012,Holiday,896897
+New Zealand,2012,Visiting friends and relatives,495451
+New Zealand,2012,Business,414343
+New Zealand,2012,Education,91779
+New Zealand,2012,Employment,280892
+New Zealand,2012,Otherreason,77461
+New Zealand,2012,Backpackers,86421
+New Zealand,2012,Nonbackpackers,2170401
+Japan,2012,Holiday,928877
+Japan,2012,Visiting friends and relatives,82614
+Japan,2012,Business,132472
+Japan,2012,Education,268382
+Japan,2012,Employment,0
+Japan,2012,Otherreason,0
+Japan,2012,Backpackers,196243
+Japan,2012,Nonbackpackers,1353100
+Singapore,2012,Holiday,343190
+Singapore,2012,Visiting friends and relatives,112938
+Singapore,2012,Business,166518
+Singapore,2012,Education,333951
+Singapore,2012,Employment,0
+Singapore,2012,Otherreason,24134
+Singapore,2012,Backpackers,52767
+Singapore,2012,Nonbackpackers,974211
+China,2012,Holiday,1136634
+China,2012,Visiting friends and relatives,412541
+China,2012,Business,326811
+China,2012,Education,1948549
+China,2012,Employment,190665
+China,2012,Otherreason,117824
+China,2012,Backpackers,127426
+China,2012,Nonbackpackers,4005598
+United States,2012,Holiday,873572
+United States,2012,Visiting friends and relatives,364128
+United States,2012,Business,680850
+United States,2012,Education,240711
+United States,2012,Employment,121272
+United States,2012,Otherreason,62318
+United States,2012,Backpackers,254239
+United States,2012,Nonbackpackers,2088611
+United Kingdom,2012,Holiday,1312971
+United Kingdom,2012,Visiting friends and relatives,868926
+United Kingdom,2012,Business,346860
+United Kingdom,2012,Education,63992
+United Kingdom,2012,Employment,371007
+United Kingdom,2012,Otherreason,55966
+United Kingdom,2012,Backpackers,681885
+United Kingdom,2012,Nonbackpackers,2337837
+Korea,2012,Holiday,533951
+Korea,2012,Visiting friends and relatives,129179
+Korea,2012,Business,91715
+Korea,2012,Education,378495
+Korea,2012,Employment,76292
+Korea,2012,Otherreason,108153
+Korea,2012,Backpackers,298579
+Korea,2012,Nonbackpackers,1019206
+New Zealand,2013,Holiday,956330
+New Zealand,2013,Visiting friends and relatives,552252
+New Zealand,2013,Business,413524
+New Zealand,2013,Education,82221
+New Zealand,2013,Employment,216305
+New Zealand,2013,Otherreason,90047
+New Zealand,2013,Backpackers,80212
+New Zealand,2013,Nonbackpackers,2230468
+Japan,2013,Holiday,777705
+Japan,2013,Visiting friends and relatives,79816
+Japan,2013,Business,124690
+Japan,2013,Education,246420
+Japan,2013,Employment,0
+Japan,2013,Otherreason,0
+Japan,2013,Backpackers,193689
+Japan,2013,Nonbackpackers,1118268
+Singapore,2013,Holiday,391522
+Singapore,2013,Visiting friends and relatives,142189
+Singapore,2013,Business,163295
+Singapore,2013,Education,264099
+Singapore,2013,Employment,0
+Singapore,2013,Otherreason,0
+Singapore,2013,Backpackers,49568
+Singapore,2013,Nonbackpackers,1004402
+China,2013,Holiday,1500730
+China,2013,Visiting friends and relatives,476277
+China,2013,Business,349226
+China,2013,Education,2156881
+China,2013,Employment,169613
+China,2013,Otherreason,130729
+China,2013,Backpackers,150824
+China,2013,Nonbackpackers,4632632
+United States,2013,Holiday,998274
+United States,2013,Visiting friends and relatives,381371
+United States,2013,Business,646203
+United States,2013,Education,258188
+United States,2013,Employment,186556
+United States,2013,Otherreason,81633
+United States,2013,Backpackers,269321
+United States,2013,Nonbackpackers,2282904
+United Kingdom,2013,Holiday,1495337
+United Kingdom,2013,Visiting friends and relatives,992591
+United Kingdom,2013,Business,284169
+United Kingdom,2013,Education,102539
+United Kingdom,2013,Employment,442302
+United Kingdom,2013,Otherreason,87665
+United Kingdom,2013,Backpackers,867742
+United Kingdom,2013,Nonbackpackers,2536860
+Korea,2013,Holiday,553601
+Korea,2013,Visiting friends and relatives,77093
+Korea,2013,Business,77279
+Korea,2013,Education,312695
+Korea,2013,Employment,0
+Korea,2013,Otherreason,50849
+Korea,2013,Backpackers,252139
+Korea,2013,Nonbackpackers,887052
+New Zealand,2014,Holiday,996021
+New Zealand,2014,Visiting friends and relatives,620749
+New Zealand,2014,Business,390830
+New Zealand,2014,Education,98971
+New Zealand,2014,Employment,236065
+New Zealand,2014,Otherreason,95685
+New Zealand,2014,Backpackers,84878
+New Zealand,2014,Nonbackpackers,2353443
+Japan,2014,Holiday,766745
+Japan,2014,Visiting friends and relatives,80553
+Japan,2014,Business,179916
+Japan,2014,Education,250786
+Japan,2014,Employment,0
+Japan,2014,Otherreason,0
+Japan,2014,Backpackers,167430
+Japan,2014,Nonbackpackers,1197539
+Singapore,2014,Holiday,433705
+Singapore,2014,Visiting friends and relatives,160459
+Singapore,2014,Business,185203
+Singapore,2014,Education,287576
+Singapore,2014,Employment,0
+Singapore,2014,Otherreason,18121
+Singapore,2014,Backpackers,42201
+Singapore,2014,Nonbackpackers,1110761
+China,2014,Holiday,1894084
+China,2014,Visiting friends and relatives,677192
+China,2014,Business,321288
+China,2014,Education,2447342
+China,2014,Employment,263580
+China,2014,Otherreason,108706
+China,2014,Backpackers,110756
+China,2014,Nonbackpackers,5601437
+United States,2014,Holiday,1154904
+United States,2014,Visiting friends and relatives,457778
+United States,2014,Business,712896
+United States,2014,Education,215756
+United States,2014,Employment,156190
+United States,2014,Otherreason,92727
+United States,2014,Backpackers,255760
+United States,2014,Nonbackpackers,2534491
+United Kingdom,2014,Holiday,1461787
+United Kingdom,2014,Visiting friends and relatives,991898
+United Kingdom,2014,Business,347645
+United Kingdom,2014,Education,106762
+United Kingdom,2014,Employment,402132
+United Kingdom,2014,Otherreason,73317
+United Kingdom,2014,Backpackers,753437
+United Kingdom,2014,Nonbackpackers,2630103
+Korea,2014,Holiday,521911
+Korea,2014,Visiting friends and relatives,88675
+Korea,2014,Business,72547
+Korea,2014,Education,292167
+Korea,2014,Employment,0
+Korea,2014,Otherreason,109325
+Korea,2014,Backpackers,201886
+Korea,2014,Nonbackpackers,937857
+New Zealand,2015,Holiday,1073040
+New Zealand,2015,Visiting friends and relatives,624636
+New Zealand,2015,Business,387756
+New Zealand,2015,Education,161513
+New Zealand,2015,Employment,281248
+New Zealand,2015,Otherreason,113634
+New Zealand,2015,Backpackers,80332
+New Zealand,2015,Nonbackpackers,2561495
+Japan,2015,Holiday,736257
+Japan,2015,Visiting friends and relatives,86512
+Japan,2015,Business,134246
+Japan,2015,Education,307015
+Japan,2015,Employment,0
+Japan,2015,Otherreason,0
+Japan,2015,Backpackers,174938
+Japan,2015,Nonbackpackers,1157117
+Singapore,2015,Holiday,499242
+Singapore,2015,Visiting friends and relatives,159750
+Singapore,2015,Business,207510
+Singapore,2015,Education,400980
+Singapore,2015,Employment,0
+Singapore,2015,Otherreason,0
+Singapore,2015,Backpackers,50843
+Singapore,2015,Nonbackpackers,1332255
+China,2015,Holiday,2725450
+China,2015,Visiting friends and relatives,1013272
+China,2015,Business,433094
+China,2015,Education,3435950
+China,2015,Employment,380107
+China,2015,Otherreason,279839
+China,2015,Backpackers,125151
+China,2015,Nonbackpackers,8142562
+United States,2015,Holiday,1470232
+United States,2015,Visiting friends and relatives,558653
+United States,2015,Business,736155
+United States,2015,Education,301033
+United States,2015,Employment,231095
+United States,2015,Otherreason,114154
+United States,2015,Backpackers,347956
+United States,2015,Nonbackpackers,3063367
+United Kingdom,2015,Holiday,1740414
+United Kingdom,2015,Visiting friends and relatives,1148952
+United Kingdom,2015,Business,322289
+United Kingdom,2015,Education,132574
+United Kingdom,2015,Employment,350504
+United Kingdom,2015,Otherreason,107298
+United Kingdom,2015,Backpackers,840705
+United Kingdom,2015,Nonbackpackers,2961326
+Korea,2015,Holiday,641906
+Korea,2015,Visiting friends and relatives,119652
+Korea,2015,Business,75778
+Korea,2015,Education,300210
+Korea,2015,Employment,0
+Korea,2015,Otherreason,106651
+Korea,2015,Backpackers,241739
+Korea,2015,Nonbackpackers,1103626
+New Zealand,2016,Holiday,1216370
+New Zealand,2016,Visiting friends and relatives,593282
+New Zealand,2016,Business,446390
+New Zealand,2016,Education,142663
+New Zealand,2016,Employment,208520
+New Zealand,2016,Otherreason,105162
+New Zealand,2016,Backpackers,95090
+New Zealand,2016,Nonbackpackers,2617298
+Japan,2016,Holiday,1094568
+Japan,2016,Visiting friends and relatives,92414
+Japan,2016,Business,160770
+Japan,2016,Education,264776
+Japan,2016,Employment,0
+Japan,2016,Otherreason,0
+Japan,2016,Backpackers,153901
+Japan,2016,Nonbackpackers,1567224
+Singapore,2016,Holiday,609748
+Singapore,2016,Visiting friends and relatives,132155
+Singapore,2016,Business,197453
+Singapore,2016,Education,369706
+Singapore,2016,Employment,0
+Singapore,2016,Otherreason,0
+Singapore,2016,Backpackers,36435
+Singapore,2016,Nonbackpackers,1399036
+China,2016,Holiday,3152415
+China,2016,Visiting friends and relatives,921412
+China,2016,Business,360451
+China,2016,Education,4280948
+China,2016,Employment,307336
+China,2016,Otherreason,150820
+China,2016,Backpackers,171247
+China,2016,Nonbackpackers,9002135
+United States,2016,Holiday,1799411
+United States,2016,Visiting friends and relatives,549615
+United States,2016,Business,671450
+United States,2016,Education,361148
+United States,2016,Employment,159249
+United States,2016,Otherreason,117074
+United States,2016,Backpackers,374832
+United States,2016,Nonbackpackers,3283115
+United Kingdom,2016,Holiday,1836180
+United Kingdom,2016,Visiting friends and relatives,1038033
+United Kingdom,2016,Business,270569
+United Kingdom,2016,Education,129829
+United Kingdom,2016,Employment,314930
+United Kingdom,2016,Otherreason,95489
+United Kingdom,2016,Backpackers,801315
+United Kingdom,2016,Nonbackpackers,2883714
+Korea,2016,Holiday,803427
+Korea,2016,Visiting friends and relatives,106820
+Korea,2016,Business,84546
+Korea,2016,Education,332310
+Korea,2016,Employment,119434
+Korea,2016,Otherreason,122324
+Korea,2016,Backpackers,203501
+Korea,2016,Nonbackpackers,1365361

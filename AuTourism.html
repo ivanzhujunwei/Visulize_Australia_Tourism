@@ -1,0 +1,263 @@
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8">
+    </script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/raphael.min.js"></script>
+    <script src="js/kartograph.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"/>
+</head>
+<body>
+<div style="position:absolute;top:10px;left:20px;z-index:10;float:left">
+    <label>Expenditure categories:</label>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default btn-primary" data-val="Total">Total</button>
+        <button type="button" class="btn btn-default" data-val="Holiday">Holiday</button>
+        <button type="button" class="btn btn-default" data-val="Business">Business</button>
+        <button type="button" class="btn btn-default" data-val="Education">Education</button>
+        <button type="button" class="btn btn-default" data-val="Employment">Employment</button>
+        <button type="button" class="btn btn-default" data-val="Visiting friends and relatives">Visiting friends and
+            relatives
+        </button>
+        <button type="button" class="btn btn-default" data-val="Otherreason">Other reasons</button>
+    </div>
+</div>
+<div id="map"></div>
+<div id="bar" style="width:800px;height: 500px;margin-left: 30px;margin-top: -80px;">
+</div>
+<!-- <div id="myDiv" style="width:800;height: 500; margin-left: 20px;">
+    <p>Click on this text to update the chart with new data values (once). </p>
+</div> -->
+
+<!-- <script src="jquery.qtips.js"></script> -->
+<!-- <link rel="stylesheet" type="text/css" href="jquery.qtip.css"> -->
+<script>
+    var map = kartograph.map('#map', 800, 500);
+    var key, scale, symbols, radius, color, proportion, barX, barY, keysSorted, colors, yScale, xScale;
+
+    //Width and height
+    var w = 800;
+    var h = 500;
+    barX = [];
+    barY = [];
+    colors = {"Total":"#68d29c",
+                "Holiday":"#38a6d2",
+                "Business":"#ad61d2",
+                "Education":"#ff0014",
+                "Employment":"#ff1f86",
+                "Visiting friends and relatives":"#ff7a1c",
+                "Otherreason":"#f4a4ff",};
+
+    //Create SVG elements
+    var svg = d3.select("#bar")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+    d3.csv("06-16ExpenditureCategories.csv", function (error, data) {
+        // initialise countries longitude and latitude
+        var wellData = {};
+        var tourismData = data;
+        d3.csv("countryGeo.csv", function (geoData) {
+            var allGeoData = geoData;
+            tourismData.forEach(function (d, i) {
+                var countryName = d.Country;
+                var year = d.Year;
+                allGeoData.forEach(function (d, i) {
+                    if (countryName == d.name && !wellData[countryName]) {
+                        wellData[countryName] = {"country": countryName, "lon": d.longitude, "lai": d.latitude};
+                        return false;
+                    }
+                });
+                var category = d.Category;
+                var expenditure = parseInt(d.Expenditure);
+                if (!wellData[countryName][year]) {
+                    wellData[countryName][year] = {};
+                    wellData[countryName][year]["Total"] = 0;
+                }
+                // set expenditure to each category
+                wellData[countryName][year][category] = expenditure;
+                if (!category.includes("packers")) {
+                    // calculate total for each year
+                    var total = wellData[countryName][year]["Total"];
+                    wellData[countryName][year]["Total"] = total + expenditure;
+                    // calculate total for all years
+                    if (!wellData[countryName]["Total"]) {
+                        wellData[countryName]["Total"] = 0;
+                    }
+                    wellData[countryName]["Total"] = wellData[countryName]["Total"] + expenditure;
+                }
+            });
+
+            keysSorted = Object.keys(wellData).sort(function (a, b) {
+                return wellData[b].Total - wellData[a].Total
+            });
+            keysSorted.forEach(function (d, i) {
+                barX.push(d);
+                barY.push(wellData[d].Total);
+            });
+
+            //////////////////////
+            var barData = [{
+                x: barX,
+                y: barY,
+                type: 'bar',
+                marker: {
+                    color: colors[key]
+                }
+            }];
+            Plotly.newPlot('bar', barData);
+        });
+        key = "Total";
+        color = colors[key];
+        proportion = 900000;
+        // scale = kartograph.scale.linear(wellData, key);
+        map.loadMap('world.svg', function () {
+            // do something with mymap, add layers etc.
+            map.addLayer('countries', {
+                styles: {
+                    fill: '#dfdcdc',
+                    stroke: '#fff'
+                }
+            });
+
+            function symbolAttrs(d) {
+                radius = getExpenditure(d) / proportion;
+                return {
+                    r: radius,
+                    stroke: color,
+                    'stroke-width': 1,
+                    fill: color,
+                    'fill-opacity': 0.5
+                };
+            }
+
+            symbols = map.addSymbols({
+                type: kartograph.Bubble,
+                data: wellData,
+                location: function (d) {
+                    return [d.lon, d.lai];
+                },
+                attrs: symbolAttrs,
+                title: function (d) {
+                    return d.country + ": $" + d.Total;
+                }
+            });
+
+            updateMap = function () {
+                key = $('.btn-primary').data('val');
+                // scale = kartograph.scale.linear(wellData, key);
+                symbols.update({
+                    attrs: symbolAttrs,
+                    title: function (d) {
+                        return d.country;
+                    }
+                }, 500, 'backOut');
+            }
+            // add lables
+            map.addSymbols({
+                type: kartograph.Label,
+                data: wellData,
+                location: function (d) {
+                    return [d.lon, Number(d.lai) - 8];
+                },
+                style: function (d) {
+                    return 'font-family: AquilineTwoRegular; fill:black; fill-opacity: .58; font-size:12px;'
+                },
+                text: function (d) {
+                    return d.country;
+                }
+            });
+
+        })
+
+        $('.btn').click(function (event) {
+            var tgt = $(event.target), par = tgt.parent();
+            $('.btn', par).removeClass('btn-primary');
+            tgt.addClass('btn-primary');
+            updateMap();
+            // updateBarChart();
+            updateBar();
+        });
+
+        // this is for plotly library, not woking currently
+        updateBar = function () {
+            key = $('.btn-primary').data('val');
+            var unsortedBar = {};
+            // loop countries, put total expenditure into barY by category order
+            barX.forEach(function(d,i){
+                if (key == "Total") {
+                    unsortedBar[d] = wellData[d].Total;
+                } else {
+                    var amountInKey = 0;
+                    for (var i = 2006; i <= 2016; i++) {
+                        amountInKey += wellData[d][i][key];
+                    }
+                    unsortedBar[d] = amountInKey;
+                }
+            });
+
+            // update keySorted 
+            // In total, country A may have the highest expenditure 
+            // However, regarding one specific category, e.g. Holiday, country B may have the highest expenditure
+            // In this case, the bar chart need to be sorted accordingly
+            keysSorted = Object.keys(unsortedBar).sort(function (a, b) {
+                return unsortedBar[b] - unsortedBar[a]
+            });
+            barX = [];
+            barY = [];
+            keysSorted.forEach(function (d, i) {
+                barX.push(d);
+                barY.push(unsortedBar[d]);
+
+            });
+
+
+            
+            var updatedData = [{
+              x: barX,
+              y: barY,
+              type: 'bar',
+                marker: {color:colors[key]}
+            }];
+            var layout_update = {
+                title: 'Expenditure of '+ key + " when tourists vist Australia", // updates the title
+            };
+
+            // 1) using animate way to re-render the bar chart
+//            Plotly.animate('bar', {
+//                data: updatedData,
+//                layout: layout_update
+//              }, {
+//                // the animation is not working for bar char now
+//                transition: {
+//                  duration: 50000,
+//                  easing: 'cubic-in-out'
+//                }
+//              })
+            // 2) using newPlot to create a new plot
+             Plotly.newPlot('bar', updatedData, layout_update);
+        }
+    });
+
+    // other methods for calculations
+    // get expenditure based on different category
+    function getExpenditure(d) {
+        color = colors[key];
+        if (key == "Total") {
+            return d.Total;
+        } else {
+            proportion = 700000;
+            var amountInKey = 0;
+            for (var i = 2006; i <= 2016; i++) {
+                amountInKey += d[i][key];
+            }
+            return amountInKey;
+        }
+    }
+</script>
+</body>
+</html>

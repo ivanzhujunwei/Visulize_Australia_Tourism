@@ -1,0 +1,370 @@
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8">
+    </script>
+    <!-- Plotly.js -->
+    <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/raphael.min.js"></script>
+    <script src="js/kartograph.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"/>
+</head>
+<body>
+<div style="position:absolute;top:10px;left:20px;z-index:10;float:left">
+    <label>Expenditure categories:</label>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default btn-primary" data-val="Total">Total</button>
+        <button type="button" class="btn btn-default" data-val="Holiday">Holiday</button>
+        <button type="button" class="btn btn-default" data-val="Business">Business</button>
+        <button type="button" class="btn btn-default" data-val="Education">Education</button>
+        <button type="button" class="btn btn-default" data-val="Employment">Employment</button>
+        <button type="button" class="btn btn-default" data-val="Visiting friends and relatives">Visiting friends and
+            relatives
+        </button>
+        <button type="button" class="btn btn-default" data-val="Otherreason">Other reasons</button>
+    </div>
+</div>
+<div id="map"></div>
+<div id="bar" style="margin-left: 30px;">
+</div>
+<div id="myDiv" style="width:800;height: 500; margin-left: 20px;">
+    <p>Click on this text to update the chart with new data values (once). </p>
+</div>
+
+<!-- <script src="jquery.qtips.js"></script> -->
+<!-- <link rel="stylesheet" type="text/css" href="jquery.qtip.css"> -->
+<script>
+    var map = kartograph.map('#map', 800, 500);
+    var key, scale, symbols, radius, color, proportion, barX, barY, keysSorted, yScale, xScale;
+
+    //Width and height
+    var w = 800;
+    var h = 500;
+    barX = [];
+    barY = [];
+
+    //Create SVG elements
+    var svg = d3.select("#bar")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+    d3.csv("06-16ExpenditureCategories.csv", function (error, data) {
+        // initialise countries longitude and latitude
+        var wellData = {};
+        var tourismData = data;
+        d3.csv("countryGeo.csv", function (geoData) {
+            var allGeoData = geoData;
+            tourismData.forEach(function (d, i) {
+                var countryName = d.Country;
+                var year = d.Year;
+                allGeoData.forEach(function (d, i) {
+                    if (countryName == d.name && !wellData[countryName]) {
+                        wellData[countryName] = {"country": countryName, "lon": d.longitude, "lai": d.latitude};
+                        return false;
+                    }
+                });
+                var category = d.Category;
+                var expenditure = parseInt(d.Expenditure);
+                if (!wellData[countryName][year]) {
+                    wellData[countryName][year] = {};
+                    wellData[countryName][year]["Total"] = 0;
+                }
+                // set expenditure to each category
+                wellData[countryName][year][category] = expenditure;
+                if (!category.includes("packers")) {
+                    // calculate total for each year
+                    var total = wellData[countryName][year]["Total"];
+                    wellData[countryName][year]["Total"] = total + expenditure;
+                    // calculate total for all years
+                    if (!wellData[countryName]["Total"]) {
+                        wellData[countryName]["Total"] = 0;
+                    }
+                    wellData[countryName]["Total"] = wellData[countryName]["Total"] + expenditure;
+                }
+
+                // get bar chart x axis
+
+            });
+
+            keysSorted = Object.keys(wellData).sort(function (a, b) {
+                return wellData[b].Total - wellData[a].Total
+            });
+            keysSorted.forEach(function (d, i) {
+                barX.push(d);
+                barY.push(wellData[d].Total);
+
+            });
+
+            //////////////////////////////
+            //Width and height
+            var w = 600;
+            var h = 250;
+
+            xScale = d3.scale.ordinal()
+                .domain(d3.range(keysSorted.length))
+                .rangeRoundBands([0, w], 0.05);
+
+            yScale = d3.scale.linear()
+                .domain([0, d3.max(barY)])
+                .range([0, h]);
+
+            //Create bars
+            svg.selectAll("rect")
+                .data(barY)
+                .enter()
+                .append("rect")
+                .attr("x", function (d, i) {
+                    return xScale(i);
+                })
+                .attr("y", function (d) {
+                    return h - yScale(d);
+                })
+                .attr("width", xScale.rangeBand())
+                .attr("height", function (d) {
+                    return yScale(d);
+                })
+                .attr("fill", function (d) {
+                    return "green";//"rgb(0, 0, " + (d * 10) + ")";
+                });
+
+            //Create labels
+            svg.selectAll("text")
+                .data(barY)
+                .enter()
+                .append("text")
+                .attr("dy", "0em")
+                .text(function (d, i) {
+                    var exp = parseInt(d / 1000000);
+                    return barX[i] + " $" + exp + "M";
+                })
+                .attr("text-anchor", "middle")
+                .attr("x", function (d, i) {
+                    return xScale(i) + xScale.rangeBand() / 2;
+                })
+                .attr("y", function (d) {
+                    return h - yScale(d) + 14;
+                })
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "11px")
+                .attr("fill", "white");
+            //////////////////////
+            // var barData = [{
+            //     x: barX,
+            //     y: barY,
+            //     type: 'bar',
+            //     marker: {
+            //         color: '#39d257'
+            //     }
+            // }];
+            // Plotly.newPlot('myDiv', barData);
+        });
+        key = "Total";
+        color = "green";
+        proportion = 900000;
+        // scale = kartograph.scale.linear(wellData, key);
+        map.loadMap('world.svg', function () {
+            // do something with mymap, add layers etc.
+            map.addLayer('countries', {
+                styles: {
+                    fill: '#dfdcdc',
+                    stroke: '#fff'
+                }
+            });
+
+            function symbolAttrs(d) {
+                radius = getExpenditure(d) / proportion;
+                return {
+                    r: radius,
+                    stroke: color,
+                    'stroke-width': 1,
+                    fill: color,
+                    'fill-opacity': 0.5
+                };
+            }
+
+            symbols = map.addSymbols({
+                type: kartograph.Bubble,
+                data: wellData,
+                location: function (d) {
+                    return [d.lon, d.lai];
+                },
+                attrs: symbolAttrs,
+                title: function (d) {
+                    return d.country + ": $" + d.Total;
+                }
+            });
+
+            updateMap = function () {
+                key = $('.btn-primary').data('val');
+                // scale = kartograph.scale.linear(wellData, key);
+                symbols.update({
+                    attrs: symbolAttrs,
+                    title: function (d) {
+                        return d.country;
+                    }
+                }, 500, 'backOut');
+            }
+            // add lables
+            map.addSymbols({
+                type: kartograph.Label,
+                data: wellData,
+                location: function (d) {
+                    return [d.lon, Number(d.lai) - 8];
+                },
+                style: function (d) {
+                    return 'font-family: AquilineTwoRegular; fill:black; fill-opacity: .58; font-size:12px;'
+                },
+                text: function (d) {
+                    return d.country;
+                }
+            });
+
+        })
+
+        $('.btn').click(function (event) {
+            var tgt = $(event.target), par = tgt.parent();
+            $('.btn', par).removeClass('btn-primary');
+            tgt.addClass('btn-primary');
+            updateMap();
+            updateBarChart();
+            // updateBar();
+        });
+
+
+        updateBarChart = function () {
+            key = $('.btn-primary').data('val');
+            //New values for dataset
+        }
+        // this is for plotly library, not woking currently
+        // updateBar = function () {
+        //     key = $('.btn-primary').data('val');
+        //     var data_update = {
+        //         x: barX,//['giraffes', 'orangutans', 'monkeys'],
+        //         y: barY//[20, 14, 23],
+        //         // type: 'bar'
+        //         // marker: {color: 'red'}
+        //     };
+        //     var layout_update = {
+        //         title: 'some new title', // updates the title
+        //     };
+        //     Plotly.update('myDiv', data_update, layout_update);
+        // }
+
+        //New values for dataset
+        dataset = [11, 12, 15, 20, 18, 17, 16, 18, 23, 25,
+            5, 10, 13, 19, 21, 25, 22, 18, 15, 13];
+
+        var xScale = d3.scale.ordinal()
+            .domain(d3.range(dataset.length))
+            .rangeRoundBands([0, w], 0.05);
+
+        var yScale = d3.scale.linear()
+            .domain([0, d3.max(dataset)])
+            .range([0, h]);
+
+        //Create SVG element
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+        //Create bars
+        svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("x", function (d, i) {
+                return xScale(i);
+            })
+            .attr("y", function (d) {
+                return h - yScale(d);
+            })
+            .attr("width", xScale.rangeBand())
+            .attr("height", function (d) {
+                return yScale(d);
+            })
+            .attr("fill", function (d) {
+                return "rgb(0, 0, " + (d * 10) + ")";
+            });
+
+        //Create labels
+        svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .text(function (d) {
+                return d;
+            })
+            .attr("text-anchor", "middle")
+            .attr("x", function (d, i) {
+                return xScale(i) + xScale.rangeBand() / 2;
+            })
+            .attr("y", function (d) {
+                return h - yScale(d) + 14;
+            })
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "11px")
+            .attr("fill", "white");
+
+        //On click, update with new data
+        d3.select("p")
+            .on("click", function () {
+
+                //New values for dataset
+                dataset = [11, 22, 18, 15, 13, 12, 15, 20, 18, 17, 16, 18, 23, 25,
+                    5, 10, 13, 19, 21, 25];
+
+                //Update all rects
+                svg.selectAll("rect")
+                    .data(dataset)
+                    .transition()        // <-- This makes it a smooth transition!
+                    .attr("y", function (d) {
+                        return h - yScale(d);
+                    })
+                    .attr("height", function (d) {
+                        return yScale(d);
+                    })
+                    .attr("fill", function (d) {
+                        return "rgb(0, 0, " + (d * 10) + ")";
+                    });
+
+                //Update all labels
+                svg.selectAll("text")
+                    .data(dataset)
+                    .text(function (d) {
+                        return d;
+                    })
+                    .attr("x", function (d, i) {
+                        return xScale(i) + xScale.rangeBand() / 2;
+                    })
+                    .attr("y", function (d) {
+                        return h - yScale(d) + 14;
+                    });
+
+            });
+
+
+    });
+
+    // other methods for calculations
+
+    // get expenditure based on different category
+    function getExpenditure(d) {
+        if (key == "Total") {
+            color = "green";
+            return d.Total;
+        } else {
+            proportion = 700000;
+            color = "red";
+            var amountInKey = 0;
+            for (var i = 2006; i <= 2016; i++) {
+                amountInKey += d[i][key];
+            }
+            return amountInKey;
+        }
+    }
+</script>
+</body>
+</html>
