@@ -17,29 +17,51 @@
 </div>
 <div id="bar" style="width:550px;height: 500px;"></div>
 <div style="left:20px" class="col-lg-12">
-    <label>Expenditure on different visiting purpose:</label><br>
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-sm btn-default btn-primary" data-val="Total">All purpose</button>
-        <button type="button" class="btn btn-sm btn-default" data-val="Holiday">Holiday</button>
-        <button type="button" class="btn btn-sm btn-default" data-val="Business">Business</button>
-        <button type="button" class="btn btn-sm btn-default" data-val="Education">Education</button>
-        <button type="button" class="btn btn-sm btn-default" data-val="Employment">Employment</button>
-        <button type="button" class="btn btn-sm btn-default" data-val="Visiting friends and relatives">Visiting friends
-            and relatives
-        </button>
-        <button type="button" class="btn btn-sm btn-default" data-val="Otherreason">Other reasons</button>
-    </div><br/><br/>
-    <label>Measure:</label><br>
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-sm btn-default btn-primary" data-val="Total">Total spent</button>
-        <button type="button" class="btn btn-sm btn-default" data-val="Otherreason">Average spent</button>
+        <label>Expenditure on different visiting purpose:</label><br>
+        <div class="btn-group" role="group">
+            <button type="button" class="purpose btn btn-sm btn-default btn-primary" data-val="Allpurpose">All purposes
+            </button>
+            <button type="button" class="purpose btn btn-sm btn-default" data-val="Holiday">Holiday</button>
+            <button type="button" class="purpose btn btn-sm btn-default" data-val="Business">Business</button>
+            <button type="button" class="purpose btn btn-sm btn-default" data-val="Education">Education</button>
+            <button type="button" class="purpose btn btn-sm btn-default" data-val="Employment">Employment</button>
+            <button type="button" class="purpose btn btn-sm btn-default" data-val="Visiting friends and relatives">
+                Visiting
+                friends and relatives
+            </button>
+            <button type="button" class="purpose btn btn-sm btn-default" data-val="Otherreason">Other reasons</button>
+        </div><br>
+        <label style="margin-top:10px;">Measure:</label><br>
+        <div class="btn-group" role="group">
+            <button type="button" class="measure btn btn-sm btn-default btn-primary" data-val="TotalSpent">Total of all
+                visitors spent
+            </button>
+            <button type="button" class="measure btn btn-sm btn-default" data-val="Average">Average of each visitor
+                spent
+            </button>
+        </div>
+    <br/>
+    <div style="left:20px;margin-top: 10px;">
+        The bar chart is sorted based on total spent or average spent, from highest expenditure to lowest expenditure country.<br>
+        The map provides an overview about countries that visitors came from, the radius of circle indicates how much expenditure (total or average) visitors spent.<br>
+        Once the buttons of purposes or measure are clicked, both bar chart and map will be udpate automatically.
     </div>
 </div>
-<br/><br/><br/><br/><br/><br/><br/>
+<hr style="background-color: #fff;border-top: 2px dashed #8c8b8b;margin-top: 230px;">
 <div id="bubble"></div>
+<div id="text" class="col-lg-12" style="margin-left: 40px;">
+    <br>
+    This visualization is combined with bubble chart and line chart, explaining the hidden relationship among:<br> 
+    visiting purpose, average spent of each visitor, number of visitors visiting Australia and time.
+    <br/>(1) Different legend can be clicked to hide or show corresponding visiting purpose data.
+    <br/>(2) Hover mouse on the chart, detailed information will be displayed.
+    <br/>(3) The radius of each circle indicates the number of visitors visited Australia in that year. If the circle is
+    larger, then the number is higher.
+</div>
 <script>
     var map = kartograph.map('#map', 800, 500);
-    var key, scale, symbols, radius, proportion, barX, barY, keysSorted, colors, categories, wellData, yScale, xScale,
+    var key, keyOfMeasure, scale, symbols, radius, proportion, barX, barY, keysSorted, colors, categories, wellData,
+        yScale, xScale,
         layout_bar;
 
     //Width and height
@@ -48,7 +70,7 @@
     barX = [];
     barY = [];
     colors = {
-        "Total": "#68d29c",
+        "Allpurpose": "#68d29c",
         "Holiday": "#38a6d2",
         "Business": "#ad61d2",
         "Education": "#ff0014",
@@ -124,44 +146,55 @@
                 // if the year's data is empty, then initalize it
                 if (!wellData[countryName][year]) {
                     wellData[countryName][year] = {};
-                    wellData[countryName][year]["Total"] = {
-                        "expenditure":0,
-                        "visitors":0,
-                        "avgNights":0
+                    wellData[countryName][year]["Allpurpose"] = {
+                        "expenditure": 0,
+                        "visitors": 0,
+                        "avgNights": 0
                     };
-                    // wellData[countryName][year]["Total"]["expenditure"] = 0;
-                    // wellData[countryName][year]["Total"]["visitors"] = 0;
-                    // wellData[countryName][year]["Total"]["avgNights"] = 0;
                 }
                 if (!wellData[countryName][year][category]) {
                     wellData[countryName][year][category] = {};
                 }
                 // set expenditure to each category
-                wellData[countryName][year][category]["expenditure"] = expenditure;
-                wellData[countryName][year][category]["visitors"] = visitors;
-                wellData[countryName][year][category]["avgNights"] = avgNights;
+                wellData[countryName][year][category] = {
+                    "expenditure": expenditure,
+                    "visitors": visitors,
+                    "avgNights": avgNights
+                }
                 if (!category.includes("packers")) {
                     // calculate totalSpent for each year
-                    // var totalSpent = wellData[countryName][year]["Total"]["expenditure"];
-                    wellData[countryName][year]["Total"]["expenditure"] += expenditure;
-                    wellData[countryName][year]["Total"]["visitors"] += visitors;
-                    wellData[countryName][year]["Total"]["avgNights"] += avgNights;
+                    // var totalSpent = wellData[countryName][year]["Allpurpose"]["expenditure"];
+                    wellData[countryName][year]["Allpurpose"]["expenditure"] += expenditure;
+                    wellData[countryName][year]["Allpurpose"]["visitors"] += visitors;
+                    wellData[countryName][year]["Allpurpose"]["avgNights"] += avgNights;
                     // calculate totalSpent for all years
-                    if (!wellData[countryName]["Total"]) {
-                        wellData[countryName]["Total"] = 0;
+                    if (!wellData[countryName]["Allpurpose"]) {
+                        // wellData[countryName]["Allpurpose"] = 0;
+                        wellData[countryName]["Allpurpose"] = {
+                            "expenditure": 0,
+                            "visitors": 0,
+                            "avgNights": 0
+                        }
                     }
-                    wellData[countryName]["Total"] = wellData[countryName]["Total"] + expenditure;
+                    if (countryName == "Germany") {
+                        console.log(countryName);
+                    }
+                    wellData[countryName]["Allpurpose"]["expenditure"] += expenditure;
+                    wellData[countryName]["Allpurpose"]["visitors"] += visitors;
+                    wellData[countryName]["Allpurpose"]["avgNights"] += avgNights;
                 }
             });
 
             keysSorted = Object.keys(wellData).sort(function (a, b) {
-                return wellData[b].Total - wellData[a].Total
+                // TODO total or average
+                return wellData[b].Allpurpose.expenditure - wellData[a].Allpurpose.expenditure
             });
             keysSorted.forEach(function (d, i) {
                 // remove the "allCountries" dimension
                 if (d != "AllCountries") {
                     barX.push(d);
-                    barY.push(wellData[d].Total);
+                    // TODO total or average
+                    barY.push(wellData[d].Allpurpose.expenditure);
                 }
             });
 
@@ -175,7 +208,7 @@
                 }
             }];
             layout_bar = {
-                title: 'Total trip spent of ' + key + " when tourists vist Australia", // updates the title
+                title: 'Total trip spent of ' + key + " when visitors visited Australia", // updates the title
                 yaxis: {
                     title: 'Total trip spend ($)',
                     titlefont: {
@@ -236,9 +269,9 @@
                 showlegend: true,
                 height: 650,
                 width: 1250,
-                title: 'Average trip spent of different categories from 2006 to 2016',
+                title: 'Average trip spent of different purpose in last decade',
                 yaxis: {
-                    title: 'Average trip spent($)',
+                    title: 'Average trip spent($) of each visitor',
                     titlefont: {
                         family: 'Arial, sans-serif',
                         size: 18,
@@ -252,7 +285,8 @@
             Plotly.newPlot('bubble', bubbleData, layout);
 
         });
-        key = "Total";
+        key = "Allpurpose";
+        keyOfMeasure = "TotalSpent";
         proportion = 700000000;
         map.loadMap('world.svg', function () {
             // do something with mymap, add layers etc.
@@ -283,12 +317,13 @@
                 },
                 attrs: symbolAttrs,
                 title: function (d) {
-                    return d.country + ": $" + d.Total;
+                    return d.country + ": $" + d.Allpurpose.expenditure;
                 }
             });
 
             updateMap = function () {
                 key = $('.btn-primary').data('val');
+                keyOfMeasure = $('.measure').data('val');
                 // scale = kartograph.scale.linear(wellData, key);
                 symbols.update({
                     attrs: symbolAttrs,
@@ -316,10 +351,21 @@
         })
 
 
-        $('.btn').click(function (event) {
+        $('.purpose').click(function (event) {
             var tgt = $(event.target), par = tgt.parent();
-            $('.btn', par).removeClass('btn-primary');
+            $('.purpose', par).removeClass('btn-primary');
             tgt.addClass('btn-primary');
+            updateMap();
+            // updateBarChart();
+            updateBar();
+        });
+
+        $('.measure').click(function (event) {
+            var tgt = $(event.target), par = tgt.parent();
+            $('.measure', par).removeClass('btn-primary');
+            $('.measure', par).removeClass('measure');
+            tgt.addClass('btn-primary');
+            tgt.addClass('measure');
             updateMap();
             // updateBarChart();
             updateBar();
@@ -328,16 +374,36 @@
         // this is for plotly library, not woking currently
         updateBar = function () {
             key = $('.btn-primary').data('val');
+            keyOfMeasure = $('.measure').data('val');
             var unsortedBar = {};
             // loop countries, put total expenditure into barY by category order
             barX.forEach(function (d, i) {
-                if (key == "Total") {
-                    unsortedBar[d] = wellData[d].Total;
+                var countryObj = wellData[d];
+                if (d == "Germany") {
+                    console.log(countryObj);
+                }
+                if (key == "Allpurpose") {
+                    if (keyOfMeasure == "TotalSpent") {
+                        unsortedBar[d] = countryObj.Allpurpose.expenditure;
+                    } else {
+                        console.log("visitors" + countryObj.Allpurpose.visitors);
+                        if (countryObj.Allpurpose.visitors != 0) {
+                            unsortedBar[d] = countryObj.Allpurpose.expenditure / countryObj.Allpurpose.visitors;
+                        }
+                    }
                 } else {
                     var amountInKey = 0;
                     for (var i = 2006; i <= 2016; i++) {
                         // the bar chart is showing how much trip spent in y axis
-                        amountInKey += wellData[d][i][key]["expenditure"];
+                        // TODO total or average
+                        if (keyOfMeasure == "TotalSpent") {
+                            amountInKey += countryObj[i][key]["expenditure"];
+                        } else {
+                            if (countryObj[i][key]["visitors"] != 0) {
+                                // 2006 - 2016 has 11 years in total
+                                amountInKey += (countryObj[i][key]["expenditure"] / countryObj[i][key]["visitors"]) / 11;
+                            }
+                        }
                     }
                     unsortedBar[d] = amountInKey;
                 }
@@ -348,7 +414,7 @@
             // However, regarding one specific category, e.g. Holiday, country B may have the highest expenditure
             // In this case, the bar chart need to be sorted accordingly
             keysSorted = Object.keys(unsortedBar).sort(function (a, b) {
-                return unsortedBar[b] - unsortedBar[a]
+                return unsortedBar[b] - unsortedBar[a];
             });
             barX = [];
             barY = [];
@@ -364,10 +430,20 @@
                 type: 'bar',
                 marker: {color: colors[key]}
             }];
+
+            var barTitle;
+            var yTitle;
+            var t = key;
+            if (keyOfMeasure == "TotalSpent") {
+                yTitle = "Total spent of " + key;
+            } else {
+                yTitle = "Average spent of " + key;
+            }
+            barTitle = yTitle + "<br> when visitors visited Australia"
             layout_bar = {
-                title: 'Total trip spent of ' + key + " when visitors travel in Australia", // updates the title
+                title: barTitle,
                 yaxis: {
-                    title: 'Total trip spent ($)',
+                    title: yTitle + ' ($)',
                     titlefont: {
                         family: 'Arial, sans-serif',
                         size: 18,
@@ -396,13 +472,26 @@
     // other methods for calculations
     // get expenditure based on different category
     function getExpenditure(d) {
-        if (key == "Total") {
-            return d.Total;
+        proportion = 500000000;
+        if (key == "Allpurpose") {
+            // TODO total or average
+            if (keyOfMeasure == "TotalSpent") {
+                return d.Allpurpose.expenditure;
+            } else {
+                proportion = 500;
+                return d.Allpurpose.expenditure / d.Allpurpose.visitors;
+            }
         } else {
-            proportion = 700000000;
             var amountInKey = 0;
             for (var i = 2006; i <= 2016; i++) {
-                amountInKey += d[i][key]["expenditure"];
+                if (keyOfMeasure == "TotalSpent") {
+                    amountInKey += d[i][key]["expenditure"];
+                } else {
+                    proportion = 500;
+                    if (d[i][key]["visitors"] != 0) {
+                        amountInKey += (d[i][key]["expenditure"] / d[i][key]["visitors"]) / 11;
+                    }
+                }
             }
             return amountInKey;
         }
