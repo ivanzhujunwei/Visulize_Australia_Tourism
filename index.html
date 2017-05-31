@@ -11,17 +11,26 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"/>
 </head>
 <body>
+<div class="col-lg-12" style="margin-left: 20px;">
+    <h2>International visitors to Australia</h2> 
+    <h3>Data visualisation of trip spent</h3>
+</div>
+<div class="col-lg-11" style="margin-left: 20px;">
+    Australia is a holiday destination and tops the ratings when it comes to world class beauty and natural environment.<br>
+    It is reported, in 2016, visitors spent 39.1 billion travelling in Australia (The NewDaily, 2017).  There are lots of visitors from all over the world coming to Australia every year, attracted by Australia's beautiful landscape, excellent education system, etc. Personally, as one of these visitors, I want to explore more about the increasing visitors. The narrative visualizations are shown below.  
+
+<hr style="background-color: #fff;border-top: 2px dashed #8c8b8b;">
+</div>
 <div class="col-lg-12" style="margin-top: -3px;">
     <!-- bar chart -->
-    <div id="bar" class="col-lg-6" style="height:450px; margin-top:0px;"></div>
+    <div id="bar" class="col-lg-6" style="width:600px; height:450px; margin-top:0px;"></div>
     <!-- line chart -->
-    <div id="line" class="col-lg-6" style="height:460px; margin-left: -60px"></div>
+    <div id="line" class="col-lg-6" style="width:620px; height:460px; margin-left: 0px"></div>
 </div>
 <div class="col-lg-12">
-    <div id="map" class="col-lg-6"></div>
     <!-- interactive buttons and narrative text -->
-    <div style="" class="col-lg-6" style="margin-left: 50px;">
-        <label>Expenditure on different visiting purpose:</label><br>
+    <div style="margin-top: -20px; width: 650px" class="col-lg-6">
+        <label>Expenditure on different visiting purposes:</label><br>
         <div class="btn-group" role="group">
             <button type="button" class="purpose btn btn-xs btn-default btn-primary" data-val="Allpurpose">All purposes
             </button>
@@ -36,7 +45,7 @@
             <button type="button" class="purpose btn btn-xs btn-default" data-val="Otherreason">Other reasons</button>
         </div>
         <br>
-        <label style="margin-top:10px;">Measure:</label><br>
+        <label style="margin-top:10px;">Measures:</label><br>
         <div class="btn-group" role="group">
             <button type="button" class="measure btn btn-xs btn-default btn-primary" data-val="TotalSpent">Total of all
                 visitors spent
@@ -47,31 +56,32 @@
         </div>
         <br/>
         <div style="left:20px;margin-top: 10px;">
-            The bar chart is sorted based on total spent or average spent, from highest expenditure to lowest
-            expenditure
-            country.<br>
-            The map provides an overview about countries that visitors came from, the radius of circle indicates how
+            The <b>bar chart</b> sorts countries based on the measures (total/average spent), from the highest to lowest spent country.
+            The <b>line chart</b> analysises visitors' trip expenditure by year and country.
+            The <b>map</b> provides an overview about countries that visitors came from, the radius of circle indicates how
             much
             expenditure (total or average) visitors spent.<br>
-            Once the buttons of purposes or measure are clicked, both bar chart and map will be udpate automatically.
+            Click buttons of purposes or measure, bar chart, line chart and map will be udpated automatically. Click the legend in line chart, that country will be shown or disappear.<br>
+            <b>Some findings: </b>1) Chinese visitors spent the most (all purposes included) both in total and average; 2) UK, USA, China, New Zealand contributed the most for Australia tourism economic; 3) Total expenditure of overseas students from China increased dramatically in last decade. 4)...
         </div>
     </div>
+    <div id="map" class="col-lg-6" style="margin-left: -70px; margin-top:-40px;"></div>
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <hr style="background-color: #fff;border-top: 2px dashed #8c8b8b;">
 <div id="bubble"></div>
-<div id="text" class="col-lg-12" style="margin-left: 40px;">
+<div id="text" class="col-lg-11" style="margin-left: 40px;">
     <br>
-    This visualization is combined with bubble chart and line chart, explaining the hidden relationship among:<br>
-    visiting purpose, average spent of each visitor, number of visitors visiting Australia and time.
+    This visualization is combined with bubble chart and line chart, explaining the hidden relationship among: visiting purpose, average spent of each visitor, number of visitors visiting Australia and time.
     <br/>(1) Different legend can be clicked to hide or show corresponding visiting purpose data.
     <br/>(2) Hover mouse on the chart, detailed information will be displayed.
     <br/>(3) The radius of each circle indicates the number of visitors visited Australia in that year. If the circle is
-    larger, then the number is higher.
+    larger, then the number is higher.<br>
+    <b>Some findings: </b> 1) Average spent of education always is higher than other purposes; 2) In last decade, only average spent of education has increased a lot; 3) The number of visitors who came for holiday is always the highest, followed by the purpose of visiting friends and relatives; 4) Generally speaking, all the number of visitors of all purposes increase; 5)...
 </div>
 <script>
-    var map = kartograph.map('#map', 600, 300);
+    var map = kartograph.map('#map', 680, 350);
     var key, keyOfMeasure, years, symbols, radius, proportion, barX, barY, keysSorted, colors, categories, wellData,
         layout_bar, lineLayout, lineData;
 
@@ -422,7 +432,7 @@
                 title: 'Average trip spent($) of each visitor',
                 titlefont: {
                     family: 'Arial, sans-serif',
-                    size: 18,
+                    size: 15,
                     color: 'darkgrey'
                 }
             },
