@@ -11,47 +11,55 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"/>
 </head>
 <body>
+<div class="col-lg-12" style="margin-top: -3px;">
+    <!-- bar chart -->
+    <div id="bar" class="col-lg-6" style="height:450px; margin-top:0px;"></div>
+    <!-- line chart -->
+    <div id="line" class="col-lg-6" style="height:460px; margin-left: -60px"></div>
+</div>
 <div class="col-lg-12">
-    <div class="col-lg-4"></div>
-    <div id="map" class="col-lg-8"></div>
+    <div id="map" class="col-lg-6"></div>
+    <!-- interactive buttons and narrative text -->
+    <div style="" class="col-lg-6" style="margin-left: 50px;">
+        <label>Expenditure on different visiting purpose:</label><br>
+        <div class="btn-group" role="group">
+            <button type="button" class="purpose btn btn-xs btn-default btn-primary" data-val="Allpurpose">All purposes
+            </button>
+            <button type="button" class="purpose btn btn-xs btn-default" data-val="Holiday">Holiday</button>
+            <button type="button" class="purpose btn btn-xs btn-default" data-val="Business">Business</button>
+            <button type="button" class="purpose btn btn-xs btn-default" data-val="Education">Education</button>
+            <button type="button" class="purpose btn btn-xs btn-default" data-val="Employment">Employment</button>
+            <button type="button" class="purpose btn btn-xs btn-default" data-val="Visiting friends and relatives">
+                Visiting
+                friends and relatives
+            </button>
+            <button type="button" class="purpose btn btn-xs btn-default" data-val="Otherreason">Other reasons</button>
+        </div>
+        <br>
+        <label style="margin-top:10px;">Measure:</label><br>
+        <div class="btn-group" role="group">
+            <button type="button" class="measure btn btn-xs btn-default btn-primary" data-val="TotalSpent">Total of all
+                visitors spent
+            </button>
+            <button type="button" class="measure btn btn-xs btn-default" data-val="Average">Average of each visitor
+                spent
+            </button>
+        </div>
+        <br/>
+        <div style="left:20px;margin-top: 10px;">
+            The bar chart is sorted based on total spent or average spent, from highest expenditure to lowest
+            expenditure
+            country.<br>
+            The map provides an overview about countries that visitors came from, the radius of circle indicates how
+            much
+            expenditure (total or average) visitors spent.<br>
+            Once the buttons of purposes or measure are clicked, both bar chart and map will be udpate automatically.
+        </div>
+    </div>
 </div>
-<div id="bar" style="width:550px;height: 500px;"></div>
-<div id="line" style="width:550px;height: 500px;"></div>
-<div style="left:20px" class="col-lg-12">
-    <label>Expenditure on different visiting purpose:</label><br>
-    <div class="btn-group" role="group">
-        <button type="button" class="purpose btn btn-sm btn-default btn-primary" data-val="Allpurpose">All purposes
-        </button>
-        <button type="button" class="purpose btn btn-sm btn-default" data-val="Holiday">Holiday</button>
-        <button type="button" class="purpose btn btn-sm btn-default" data-val="Business">Business</button>
-        <button type="button" class="purpose btn btn-sm btn-default" data-val="Education">Education</button>
-        <button type="button" class="purpose btn btn-sm btn-default" data-val="Employment">Employment</button>
-        <button type="button" class="purpose btn btn-sm btn-default" data-val="Visiting friends and relatives">
-            Visiting
-            friends and relatives
-        </button>
-        <button type="button" class="purpose btn btn-sm btn-default" data-val="Otherreason">Other reasons</button>
-    </div>
-    <br>
-    <label style="margin-top:10px;">Measure:</label><br>
-    <div class="btn-group" role="group">
-        <button type="button" class="measure btn btn-sm btn-default btn-primary" data-val="TotalSpent">Total of all
-            visitors spent
-        </button>
-        <button type="button" class="measure btn btn-sm btn-default" data-val="Average">Average of each visitor
-            spent
-        </button>
-    </div>
-    <br/>
-    <div style="left:20px;margin-top: 10px;">
-        The bar chart is sorted based on total spent or average spent, from highest expenditure to lowest expenditure
-        country.<br>
-        The map provides an overview about countries that visitors came from, the radius of circle indicates how much
-        expenditure (total or average) visitors spent.<br>
-        Once the buttons of purposes or measure are clicked, both bar chart and map will be udpate automatically.
-    </div>
-</div>
-<hr style="background-color: #fff;border-top: 2px dashed #8c8b8b;margin-top: 230px;">
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
+<hr style="background-color: #fff;border-top: 2px dashed #8c8b8b;">
 <div id="bubble"></div>
 <div id="text" class="col-lg-12" style="margin-left: 40px;">
     <br>
@@ -63,14 +71,10 @@
     larger, then the number is higher.
 </div>
 <script>
-    var map = kartograph.map('#map', 800, 500);
-    var key, keyOfMeasure, scale, symbols, radius, proportion, barX, barY, keysSorted, colors, categories, wellData,
-        yScale, xScale,
-        layout_bar;
+    var map = kartograph.map('#map', 600, 300);
+    var key, keyOfMeasure, years, symbols, radius, proportion, barX, barY, keysSorted, colors, categories, wellData,
+        layout_bar, lineLayout, lineData;
 
-    //Width and height
-    var w = 800;
-    var h = 500;
     barX = [];
     barY = [];
     colors = {
@@ -88,6 +92,11 @@
         "Employment",
         "Visiting friends and relatives",
         "Otherreason"];
+
+    years = [];
+    for (var i = 2006; i < 2017; i++) {
+        years.push(i);
+    }
 
     var wellData = {};
     wellData.AllCountries = {
@@ -194,247 +203,16 @@
             });
 
             /////////////  bar chart /////////
-            var barData = [{
-                x: barX,
-                y: barY,
-                type: 'bar',
-                marker: {
-                    color: colors[key]
-                }
-            }];
-            layout_bar = {
-                title: 'Total trip spent of ' + key + " when visitors visited Australia", // updates the title
-                yaxis: {
-                    title: 'Total trip spend ($)',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 18,
-                        color: 'darkgrey'
-                    }
-                }
-            };
-            Plotly.newPlot('bar', barData, layout_bar);
+            generateBar(barX, barY);
 
+            ///////// line chart //////////////
+            generateLine();
+            Plotly.newPlot('line', lineData, lineLayout);
 
-            ////////////  line chart //////////////
-            var xData = [
-                [2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013],
-                [2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013],
-                [2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013],
-                [2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013]
-            ];
-
-            var yData = [
-                [74, 82, 80, 74, 73, 72, 74, 70, 70, 66, 66, 69],
-                [45, 42, 50, 46, 36, 36, 34, 35, 32, 31, 31, 28],
-                [13, 14, 20, 24, 20, 24, 24, 40, 35, 41, 43, 50],
-                [18, 21, 18, 21, 16, 14, 13, 18, 17, 16, 19, 23]
-            ];
-
-            var colorssss = ['rgba(67,67,67,1)', 'rgba(115,115,115,1)', 'rgba(49,130,189, 1)',
-                'rgba(189,189,189,1)'
-            ];
-
-            var lineSize = [2, 2, 7, 2];
-
-            var labels = ['Television', 'Newspaper', 'Internet', 'Radio'];
-
-            var data = [];
-
-            for (var i = 0; i < xData.length; i++) {
-                var result = {
-                    x: xData[i],
-                    y: yData[i],
-                    type: 'scatter',
-                    mode: 'lines',
-                    line: {
-                        color: colorssss[i],
-                        width: lineSize[i]
-                    }
-                };
-                var result2 = {
-                    x: [xData[i][0], xData[i][11]],
-                    y: [yData[i][0], yData[i][11]],
-                    type: 'scatter',
-                    mode: 'markers',
-                    marker: {
-                        color: colors[i],
-                        size: 12
-
-                    }
-                };
-                data.push(result, result2);
-            }
-
-            var layout = {
-                showlegend: false,
-                height: 400,
-                width: 480,
-                xaxis: {
-                    showline: true,
-                    showgrid: false,
-                    showticklabels: true,
-                    linecolor: 'rgb(204,204,204)',
-                    linewidth: 2,
-                    autotick: false,
-                    ticks: 'outside',
-                    tickcolor: 'rgb(204,204,204)',
-                    tickwidth: 2,
-                    ticklen: 5,
-                    tickfont: {
-                        family: 'Arial',
-                        size: 12,
-                        color: 'rgb(82, 82, 82)'
-                    }
-                },
-                yaxis: {
-                    showgrid: false,
-                    zeroline: false,
-                    showline: false,
-                    showticklabels: false
-                },
-                autosize: false,
-                margin: {
-                    autoexpand: false,
-                    l: 100,
-                    r: 20,
-                    t: 100
-                },
-                annotations: [
-                    {
-                        xref: 'paper',
-                        yref: 'paper',
-                        x: 0.0,
-                        y: 1.05,
-                        xanchor: 'left',
-                        yanchor: 'bottom',
-                        text: 'Main Source for News',
-                        font: {
-                            family: 'Arial',
-                            size: 30,
-                            color: 'rgb(37,37,37)'
-                        },
-                        showarrow: false
-                    },
-                    {
-                        xref: 'paper',
-                        yref: 'paper',
-                        x: 0.5,
-                        y: -0.1,
-                        xanchor: 'center',
-                        yanchor: 'top',
-                        text: 'Source: Pew Research Center & Storytelling with data',
-                        showarrow: false,
-                        font: {
-                            family: 'Arial',
-                            size: 12,
-                            color: 'rgb(150,150,150)'
-                        }
-                    }
-                ]
-            };
-
-            for (var i = 0; i < xData.length; i++) {
-                var result = {
-                    xref: 'paper',
-                    x: 0.05,
-                    y: yData[i][0],
-                    xanchor: 'right',
-                    yanchor: 'middle',
-                    text: labels[i] + ' ' + yData[i][0] + '%',
-                    showarrow: false,
-                    font: {
-                        family: 'Arial',
-                        size: 16,
-                        color: 'black'
-                    }
-                };
-                var result2 = {
-                    xref: 'paper',
-                    x: 0.95,
-                    y: yData[i][11],
-                    xanchor: 'left',
-                    yanchor: 'middle',
-                    text: yData[i][11] + '%',
-                    font: {
-                        family: 'Arial',
-                        size: 16,
-                        color: 'black'
-                    },
-                    showarrow: false
-                };
-
-                layout.annotations.push(result, result2);
-            }
-
-
-            Plotly.newPlot('line', data, layout);
-
-
-            ///////// bubble charts////////
-            // year as the axis
-            var years = [];
-            for (var i = 2006; i < 2017; i++) {
-                years.push(i);
-            }
-            var bubbleData = [];
-            // each category has a trace data for the bubble chart
-            for (var c in categories) {
-                var category = categories[c];
-                // the y axis is average trip spent
-                var traceY = [];
-                var visitorsSize = [];
-                var text = [];
-                var color;
-                // the x axis is year
-                for (var i in years) {
-                    var year = years[i];
-                    var avgSpent = 0;
-                    var totalVisitors = 0;
-                    // use the all countries' data
-                    var c_obj = wellData.AllCountries[year][category];
-                    var visitors = c_obj["visitors"];
-                    var exp = c_obj["expenditure"];
-                    avgSpent += (exp / visitors);
-                    traceY.push(avgSpent);
-                    text.push("Visitors:" + Math.round(visitors / 1000) + "k");
-                    visitorsSize.push(visitors / 30000);
-                    color = colors[category];
-                }
-                var traceline = {
-                    x: years,
-                    y: traceY,
-                    mode: 'line',
-                    name: category == "Otherreason" ? "Other reasons" : category,
-                    marker: {
-                        size: visitorsSize,
-                        color: color,
-                    },
-                    text: text
-                };
-                bubbleData.push(traceline);
-            }
-            var layout = {
-                title: 'Marker Size',
-                showlegend: true,
-                height: 650,
-                width: 1250,
-                title: 'Average trip spent of different purpose in last decade',
-                yaxis: {
-                    title: 'Average trip spent($) of each visitor',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 18,
-                        color: 'darkgrey'
-                    }
-                },
-                xaxis: {
-                    title: 'Year'
-                }
-            };
-            Plotly.newPlot('bubble', bubbleData, layout);
-
+            ///////// bubble chart ////////
+            generateBubble();
         });
+
         key = "Allpurpose";
         keyOfMeasure = "TotalSpent";
         proportion = 700000000;
@@ -506,8 +284,8 @@
             $('.purpose', par).removeClass('btn-primary');
             tgt.addClass('btn-primary');
             updateMap();
-            // updateBarChart();
             updateBar();
+            updateLine();
         });
 
         $('.measure').click(function (event) {
@@ -519,7 +297,24 @@
             updateMap();
             // updateBarChart();
             updateBar();
+            updateLine();
         });
+
+        updateLine = function () {
+            key = $('.btn-primary').data('val');
+            keyOfMeasure = $('.measure').data('val');
+            generateLine();
+            Plotly.animate('line', {
+                data: lineData,
+                layout: lineLayout
+            }, {
+                transition: {
+                    duration: 400,
+                    easing: 'cubic-in-out'
+                }
+            })
+
+        }
 
         // this is for plotly library, not woking currently
         updateBar = function () {
@@ -574,50 +369,162 @@
 
             });
 
-            var updatedData = [{
-                x: barX,
-                y: barY,
-                type: 'bar',
-                marker: {color: colors[key]}
-            }];
-
-            var barTitle;
-            var yTitle;
-            var t = key;
-            if (keyOfMeasure == "TotalSpent") {
-                yTitle = "Total spent of " + key;
-            } else {
-                yTitle = "Average spent of " + key;
-            }
-            barTitle = yTitle + "<br> when visitors visited Australia"
-            layout_bar = {
-                title: barTitle,
-                yaxis: {
-                    title: yTitle + ' ($)',
-                    titlefont: {
-                        family: 'Arial, sans-serif',
-                        size: 18,
-                        color: 'darkgrey'
-                    }
-                }
-            };
-
-            // 1) using animate way to re-render the bar chart
-//            Plotly.animate('bar', {
-//                data: updatedData,
-//                layout: layout_update
-//              }, {
-//                // the animation is not working for bar char now
-//                transition: {
-//                  duration: 50000,
-//                  easing: 'cubic-in-out'
-//                }
-//              })
-            // 2) using newPlot to create a new plot
-            Plotly.newPlot('bar', updatedData, layout_bar);
+            generateBar(barX, barY);
         }
 
     });
+
+    function generateBubble() {
+        var bubbleData = [];
+        // each category has a trace data for the bubble chart
+        for (var c in categories) {
+            var category = categories[c];
+            // the y axis is average trip spent
+            var traceY = [];
+            var visitorsSize = [];
+            var text = [];
+            var color;
+            // the x axis is year
+            for (var i in years) {
+                var year = years[i];
+                var avgSpent = 0;
+                var totalVisitors = 0;
+                // use the all countries' data
+                var c_obj = wellData.AllCountries[year][category];
+                var visitors = c_obj["visitors"];
+                var exp = c_obj["expenditure"];
+                avgSpent += (exp / visitors);
+                traceY.push(avgSpent);
+                text.push("Visitors:" + Math.round(visitors / 1000) + "k");
+                visitorsSize.push(visitors / 30000);
+                color = colors[category];
+            }
+            var traceline = {
+                x: years,
+                y: traceY,
+                mode: 'line',
+                name: category == "Otherreason" ? "Other reasons" : category,
+                marker: {
+                    size: visitorsSize,
+                    color: color,
+                },
+                text: text
+            };
+            bubbleData.push(traceline);
+        }
+        var layout = {
+            title: 'Marker Size',
+            showlegend: true,
+            height: 650,
+            width: 1250,
+            title: 'Average trip spent of different purpose in last decade',
+            yaxis: {
+                title: 'Average trip spent($) of each visitor',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 18,
+                    color: 'darkgrey'
+                }
+            },
+            xaxis: {
+                title: 'Year'
+            }
+        };
+        Plotly.newPlot('bubble', bubbleData, layout);
+    }
+
+    function generateLine() {
+        lineData = [];
+        // max and min is used to animate line chart's y axis
+        var max = [];
+        var min = [];
+        for (var i in wellData) {
+            var co = wellData[i];
+            // remove the all countries situation
+            if (co.country != "AllCountries") {
+                var traceLineY = [];
+                for (var i in years) {
+                    var categoryObj = co[years[i]][key];
+                    // default purpose is 'All purpose'
+                    if (keyOfMeasure == "TotalSpent") {
+                        traceLineY.push(categoryObj["expenditure"]);
+                    } else {
+                        if(categoryObj["visitors"] > 0){
+                            var avgSpent = categoryObj["expenditure"]/categoryObj["visitors"];
+                            traceLineY.push(avgSpent);
+                        }else{
+                            // some countries data is not published, then it is considered as 0
+                            traceLineY.push(0);
+                        }
+                    }
+
+                }
+                var traceLine = {
+                    type: 'scatter',
+                    x: years,
+                    y: traceLineY,
+                    mode: 'lines',
+                    name: co.country
+                };
+                max.push(Math.max(...traceLineY));
+                min.push(Math.min(...traceLineY));
+                lineData.push(traceLine);
+            }
+
+        }
+        var lineTitle;
+        var yTitle;
+        if (keyOfMeasure == "TotalSpent") {
+            yTitle = "Total spent of " + key;
+        } else {
+            yTitle = "Average spent of " + key;
+        }
+        lineTitle = yTitle + " in different years <br> when international visitors visited Australia"
+        lineLayout = {
+            showlegend: true,
+            title: lineTitle,
+            yaxis: {
+                range: [Math.min(...min), Math.max(...max)],
+                title: yTitle + ' ($)',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 15,
+                    color: 'darkgrey'
+                }
+            }
+        };
+    }
+
+    // generate bar chart
+    function generateBar(barX, barY) {
+        var updatedData = [{
+            x: barX,
+            y: barY,
+            type: 'bar',
+            marker: {color: colors[key]}
+        }];
+
+        var barTitle;
+        var yTitle;
+        if (keyOfMeasure == "TotalSpent") {
+            yTitle = "Total spent of " + key;
+        } else {
+            yTitle = "Average spent of " + key;
+        }
+        barTitle = yTitle + "<br> when international visitors visited Australia"
+        layout_bar = {
+            title: barTitle,
+            yaxis: {
+                title: yTitle + ' ($)',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 15,
+                    color: 'darkgrey'
+                }
+            }
+        };
+        Plotly.newPlot('bar', updatedData, layout_bar);
+    }
 
     // other methods for calculations
     // get expenditure based on different category
