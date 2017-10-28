@@ -24,7 +24,6 @@
 
     <hr style="background-color: #fff;border-top: 2px dashed #8c8b8b;">
 </div>
-
 <div class="col-lg-12" style="margin-top: -3px;">
     <!-- bar chart -->
     <div id="bar" class="col-lg-6" style="width:600px; height:450px; margin-top:0px;"></div>
@@ -51,10 +50,11 @@
         <br>
         <label style="margin-top:10px;">Measures:</label><br>
         <div class="btn-group" role="group">
-            <button type="button" class="measure btn btn-xs btn-default btn-primary" data-val="TotalSpent">Total spent of all
-                visitors
+            <button type="button" class="measure btn btn-xs btn-default btn-primary" data-val="TotalSpent">Total of all
+                visitors spent
             </button>
-            <button type="button" class="measure btn btn-xs btn-default" data-val="Average">Average spent of each visitor
+            <button type="button" class="measure btn btn-xs btn-default" data-val="Average">Average of each visitor
+                spent
             </button>
         </div>
         <br/>
@@ -66,9 +66,9 @@
             how much expenditure (total or average) visitors spent.<br>
             Click buttons of purposes or measure, bar chart, line chart and map will be udpated automatically. Click the
             legend in line chart, that country will be shown or disappear.<br>
-            <b>Some findings: </b><br>1) Chinese visitors spent the most (all purposes included) both in total and average;<br>
-            2) UK, USA, China, New Zealand contributed the most for Australia tourism economic;<br> 3) Total expenditure of
-            overseas students from China increased dramatically in last decade.<br> 4)...
+            <b>Some findings: </b>1) Chinese visitors spent the most (all purposes included) both in total and average;
+            2) UK, USA, China, New Zealand contributed the most for Australia tourism economic; 3) Total expenditure of
+            overseas students from China increased dramatically in last decade. 4)...
         </div>
     </div>
     <div id="map" class="col-lg-6" style="margin-left: -70px; margin-top:-40px;"></div>
@@ -86,9 +86,9 @@
         <br/>(2) Hover mouse on the chart, detailed information will be displayed.
         <br/>(3) The radius of each circle indicates the number of visitors visited Australia in that year. If the
         circle is larger, then the number is higher.<br>
-        <b>Some findings: </b> <br>1) Average spent of education always is higher than other purposes; <br>2) In last decade,
-        only average spent of education has increased a lot;<br> 3) The number of visitors who came for holiday is always
-        the highest, followed by the purpose of visiting friends and relatives; <br>4) Generally speaking, all the number of
+        <b>Some findings: </b> 1) Average spent of education always is higher than other purposes; 2) In last decade,
+        only average spent of education has increased a lot; 3) The number of visitors who came for holiday is always
+        the highest, followed by the purpose of visiting friends and relatives; 4) Generally speaking, all the number of
         visitors of each single purposes increase; 5)...
     </div>
 </div>
@@ -99,6 +99,7 @@
         2) The geographical data is retrieved from Googel Developer;<br>
         3) Due to some reasons, some data of some countries in one or two years is not reliable and actually not published, in the visualizations above, it is processed as 0.
 </div>
+<div> <img src="static_qr_code_without_logo.jpg"></div>
 <script>
     var map = kartograph.map('#map', 680, 350);
     var key, keyOfMeasure, years, symbols, radius, proportion, barX, barY, keysSorted, colors, categories, wellData,
@@ -106,7 +107,6 @@
 
     barX = [];
     barY = [];
-    // Visiting purpose will be shown in the it's own color over all the visualizations
     colors = {
         "Allpurpose": "#68d29c",
         "Holiday": "#38a6d2",
@@ -116,7 +116,6 @@
         "Visiting friends and relatives": "#ff7a1c",
         "Otherreason": "#f4a4ff"
     };
-    // all visiting purposes
     categories = ["Holiday",
         "Business",
         "Education",
@@ -129,13 +128,11 @@
         years.push(i);
     }
 
-    // the prepared data that all the visualizations will use
     var wellData = {};
     wellData.AllCountries = {
         "country": "AllCountries"
     };
 
-    // read data from dataset
     d3.csv("06-16ExpenditureCategories.csv", function (error, data) {
         // initialise countries longitude and latitude
         var tourismData = data;
@@ -165,16 +162,20 @@
                 //           - Total
                 //                 - Expenditure
                 //                 - Visitors
+                //                 - Average nights stay
                 //           - Holiday
                 //                 - Expenditure
                 //                 - Visitors
+                //                 - Average nights stay
                 //           - Edudation
                 //                 - Expenditure
                 //                 - Visitors
+                //                 - Average nights stay
                 //           - ...
 
                 var expenditure = parseInt(d.Expenditure);
                 var visitors = parseInt(d.Visitors);
+                var avgNights = parseFloat(d.AverageStayNights);
 
                 ///////////////////////////////
                 // category expenditure
@@ -184,7 +185,8 @@
                     wellData[countryName][year] = {};
                     wellData[countryName][year]["Allpurpose"] = {
                         "expenditure": 0,
-                        "visitors": 0
+                        "visitors": 0,
+                        "avgNights": 0
                     };
                 }
                 if (!wellData[countryName][year][category]) {
@@ -193,23 +195,27 @@
                 // set expenditure to each category
                 wellData[countryName][year][category] = {
                     "expenditure": expenditure,
-                    "visitors": visitors
+                    "visitors": visitors,
+                    "avgNights": avgNights
                 }
                 if (!category.includes("packers")) {
                     // calculate totalSpent for each year
                     // var totalSpent = wellData[countryName][year]["Allpurpose"]["expenditure"];
                     wellData[countryName][year]["Allpurpose"]["expenditure"] += expenditure;
                     wellData[countryName][year]["Allpurpose"]["visitors"] += visitors;
+                    wellData[countryName][year]["Allpurpose"]["avgNights"] += avgNights;
                     // calculate totalSpent for all years
                     if (!wellData[countryName]["Allpurpose"]) {
                         // wellData[countryName]["Allpurpose"] = 0;
                         wellData[countryName]["Allpurpose"] = {
                             "expenditure": 0,
-                            "visitors": 0
+                            "visitors": 0,
+                            "avgNights": 0
                         }
                     }
                     wellData[countryName]["Allpurpose"]["expenditure"] += expenditure;
                     wellData[countryName]["Allpurpose"]["visitors"] += visitors;
+                    wellData[countryName]["Allpurpose"]["avgNights"] += avgNights;
                 }
             });
 
@@ -240,8 +246,6 @@
         key = "Allpurpose";
         keyOfMeasure = "TotalSpent";
         proportion = 700000000;
-
-        ////////////// map /////////////////////
         map.loadMap('world.svg', function () {
             // do something with mymap, add layers etc.
             map.addLayer('countries', {
@@ -262,7 +266,6 @@
                 };
             }
 
-            // "all countries" data is not necessary for map
             delete wellData.AllCountries;
             symbols = map.addSymbols({
                 type: kartograph.Bubble,
@@ -305,7 +308,7 @@
 
         })
 
-        // trigger the function when clicking the buttons of different visiting purposes
+
         $('.purpose').click(function (event) {
             var tgt = $(event.target), par = tgt.parent();
             $('.purpose', par).removeClass('btn-primary');
@@ -315,7 +318,6 @@
             updateLine();
         });
 
-        // triggere the function when clicking the buttons of two measures
         $('.measure').click(function (event) {
             var tgt = $(event.target), par = tgt.parent();
             $('.measure', par).removeClass('btn-primary');
@@ -323,11 +325,11 @@
             tgt.addClass('btn-primary');
             tgt.addClass('measure');
             updateMap();
+            // updateBarChart();
             updateBar();
             updateLine();
         });
 
-        // udpate line chart
         updateLine = function () {
             key = $('.btn-primary').data('val');
             keyOfMeasure = $('.measure').data('val');
@@ -344,7 +346,7 @@
 
         }
 
-        // update bar chart
+        // this is for plotly library, not woking currently
         updateBar = function () {
             key = $('.btn-primary').data('val');
             keyOfMeasure = $('.measure').data('val');
@@ -368,6 +370,7 @@
                     var amountInKey = 0;
                     for (var i = 2006; i <= 2016; i++) {
                         // the bar chart is showing how much trip spent in y axis
+                        // TODO total or average
                         if (keyOfMeasure == "TotalSpent") {
                             amountInKey += countryObj[i][key]["expenditure"];
                         } else {
@@ -493,8 +496,12 @@
                     mode: 'lines',
                     name: co.country
                 };
-                max.push(Math.max(...traceLineY));
-                min.push(Math.min(...traceLineY));
+                max.push(Math.max(...traceLineY)
+            )
+                ;
+                min.push(Math.min(...traceLineY)
+            )
+                ;
                 lineData.push(traceLine);
             }
 
@@ -511,15 +518,25 @@
             showlegend: true,
             title: lineTitle,
             yaxis: {
-                range: [Math.min(...min), Math.max(...max)],
-                title: yTitle + ' ($)',
-                titlefont: {
-                    family: 'Arial, sans-serif',
-                    size: 15,
-                    color: 'darkgrey'
-                }
-            }
-        };
+                range: [Math.min(...min
+    ),
+        Math.max(...max
+    )],
+        title: yTitle + ' ($)',
+            titlefont
+    :
+        {
+            family: 'Arial, sans-serif',
+                size
+        :
+            15,
+                color
+        :
+            'darkgrey'
+        }
+    }
+    }
+        ;
     }
 
     // generate bar chart
@@ -557,8 +574,8 @@
     // get expenditure based on different category
     function getExpenditure(d) {
         proportion = 500000000;
-        // if 'All purposes' is clicked
         if (key == "Allpurpose") {
+            // TODO total or average
             if (keyOfMeasure == "TotalSpent") {
                 return d.Allpurpose.expenditure;
             } else {
@@ -566,7 +583,6 @@
                 return d.Allpurpose.expenditure / d.Allpurpose.visitors;
             }
         } else {
-            // if other visiting purpose is clicked
             var amountInKey = 0;
             for (var i = 2006; i <= 2016; i++) {
                 if (keyOfMeasure == "TotalSpent") {
